@@ -32,9 +32,12 @@ Both Toons:
 Home = Brings up gag preview on both toons  
 End = Brings up toontask preview on both toons  
 
+#####Advanced
+To create a hotkey to activate the controls, a script is included called activate.sh.  To use it simply use your favorite hotkey program and setup a hotkey to run it.  This will let you activate the controls without manually clicking on the controls window.
+
 #####Dependencies
 xdotool
-Qt4
+Qt5
 
 #####How to compile
 Under Ubuntu:  
