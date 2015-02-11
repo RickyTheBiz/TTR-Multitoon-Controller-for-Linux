@@ -12,25 +12,25 @@ This program has been tested on Ubuntu 14.04.  It will likely run on other flavo
 8. To re-enable the controls click on the controls window
 
 #####Controls
-WASD Toon:
-W = Forward
-A = Left
-S = Backward
-D = Right
-Shift = Jump
-E = Throw pie or evidence
+WASD Toon:  
+W = Forward  
+A = Left  
+S = Backward  
+D = Right  
+Shift = Jump  
+E = Throw pie or evidence  
 
-Arrows Toon:
-Arrow Key Up = Forward
-Arrow Key Left = Left
-Arrow Key Right = Right
-Arrow Key Down = Down
-Control = Jump
-Delete = Throw pie or evidence
+Arrows Toon:  
+Arrow Key Up = Forward  
+Arrow Key Left = Left  
+Arrow Key Right = Right  
+Arrow Key Down = Down  
+Control = Jump  
+Delete = Throw pie or evidence  
 
-Both Toons:
-Home = Brings up gag preview on both toons
-End = Brings up toontask preview on both toons
+Both Toons:  
+Home = Brings up gag preview on both toons  
+End = Brings up toontask preview on both toons  
 
 #####Dependencies
 xdotool
@@ -38,8 +38,8 @@ Qt4
 
 #####How to compile
 Under Ubuntu:
-sudo apt-get install xdotool qt5-qmake
-git clone https://github.com/RickyTheBiz/TTR-Multitoon-Controller-for-Linux.git
-cd TTR-Multitoon-Controller-for-Linux
-qmake
-make
+`sudo apt-get install xdotool qt5-qmake`  
+`git clone https://github.com/RickyTheBiz/TTR-Multitoon-Controller-for-Linux.git`  
+`cd TTR-Multitoon-Controller-for-Linux`  
+`qmake`  
+`make`  
