@@ -37,7 +37,7 @@ xdotool
 Qt4
 
 #####How to compile
-Under Ubuntu:
+Under Ubuntu:  
 `sudo apt-get install xdotool qt5-qmake`  
 `git clone https://github.com/RickyTheBiz/TTR-Multitoon-Controller-for-Linux.git`  
 `cd TTR-Multitoon-Controller-for-Linux`  
