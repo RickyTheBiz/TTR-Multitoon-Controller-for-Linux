@@ -10,6 +10,7 @@ This program has been tested on Ubuntu 14.04.  It will likely run on other flavo
 6. Once both windows are bound, you can control each toon independently whenever the controller window is clicked on.
 7. To chat, pick gags, or otherwise temporarily disable the controls simply click on one of the TTR windows.
 8. To re-enable the controls click on the controls window
+9. If a toon crashes, simply click the button again, then the window, and your toon will be bound to those controls again.
 
 #####Controls
 WASD Toon:  
