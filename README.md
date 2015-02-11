@@ -39,10 +39,11 @@ To create a hotkey to activate the controls, a script is included called activat
 #####Dependencies
 xdotool
 Qt5
+git
 
 #####How to compile
 Under Ubuntu:  
-`sudo apt-get install xdotool qt5-qmake`  
+`sudo apt-get install xdotool git qt-sdk build-essential`  
 `git clone https://github.com/RickyTheBiz/TTR-Multitoon-Controller-for-Linux.git`  
 `cd TTR-Multitoon-Controller-for-Linux`  
 `qmake`  
