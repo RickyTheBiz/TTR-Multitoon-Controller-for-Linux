@@ -12,6 +12,8 @@ This program has been tested on Ubuntu 14.04.  It will likely run on other flavo
 8. To re-enable the controls click on the controls window
 9. If a toon crashes, simply click the button again, then the window, and your toon will be bound to those controls again.
 
+Video tutorial at: https://www.youtube.com/watch?v=iA_vh0EKJJc
+
 #####Controls
 WASD Toon:  
 W = Forward  
@@ -39,10 +41,11 @@ To create a hotkey to activate the controls, a script is included called activat
 #####Dependencies
 xdotool
 Qt5
+git
 
 #####How to compile
 Under Ubuntu:  
-`sudo apt-get install xdotool qt5-qmake`  
+`sudo apt-get install xdotool git qt-sdk build-essential`  
 `git clone https://github.com/RickyTheBiz/TTR-Multitoon-Controller-for-Linux.git`  
 `cd TTR-Multitoon-Controller-for-Linux`  
 `qmake`  
