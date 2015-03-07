@@ -242,6 +242,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
                 process.waitForFinished();
                 break;
         }
+        case Qt::Key_Q:
+        {
+            std::stringstream s;
+            std::stringstream s2;
+            s << "xdotool key --window " << win1 << " Delete";
+            s2 << "xdotool key --window " << win2 << " Delete";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            cmd = s2.str().c_str();
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
     }
 }
 

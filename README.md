@@ -32,6 +32,7 @@ Control = Jump
 Delete = Throw pie or evidence  
 
 Both Toons:  
+Q = Throws pie at smallest power on both toons (slightly bugged as power isn't always the same)  
 Home = Brings up gag preview on both toons  
 End = Brings up toontask preview on both toons  
 
