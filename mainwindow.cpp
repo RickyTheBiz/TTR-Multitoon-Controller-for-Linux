@@ -5,18 +5,19 @@
 #include <QString>
 #include <sstream>
 #include <QKeyEvent>
+#include <QDebug>
 
 static int win1;
 static int win2;
 
-void delay( int millisecondsToWait )
+/*void delay( int millisecondsToWait )
 {
     QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
     while( QTime::currentTime() < dieTime )
     {
         QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
-}
+}*/
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,13 +34,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_wasd_clicked()
 {
-    delay(3000);
+//    delay(3000);
     QProcess process;
-    process.start("xdotool getwindowfocus");
+    process.start("xdotool selectwindow");
     process.waitForFinished();
     QByteArray id = process.readAllStandardOutput();
     std::stringstream ss;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < id.size(); i++)
     {
         char temp = id[i];
         ss << temp;
@@ -59,13 +60,13 @@ void MainWindow::on_wasd_clicked()
 
 void MainWindow::on_arrows_clicked()
 {
-    delay(3000);
+    //delay(3000);
     QProcess process;
-    process.start("xdotool getwindowfocus");
+    process.start("xdotool selectwindow");
     process.waitForFinished();
     QByteArray id = process.readAllStandardOutput();
     std::stringstream ss;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < id.size(); i++)
     {
         char temp = id[i];
         ss << temp;
