@@ -10,14 +10,14 @@
 static int win1;
 static int win2;
 
-/*void delay( int millisecondsToWait )
+void delay( int millisecondsToWait )
 {
     QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
     while( QTime::currentTime() < dieTime )
     {
         QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
-}*/
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,9 +34,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_wasd_clicked()
 {
-//    delay(3000);
+    delay(3000);
     QProcess process;
-    process.start("xdotool selectwindow");
+    process.start("xdotool getwindowfocus");
     process.waitForFinished();
     QByteArray id = process.readAllStandardOutput();
     std::stringstream ss;
@@ -60,9 +60,9 @@ void MainWindow::on_wasd_clicked()
 
 void MainWindow::on_arrows_clicked()
 {
-    //delay(3000);
+    delay(3000);
     QProcess process;
-    process.start("xdotool selectwindow");
+    process.start("xdotool getwindowfocus");
     process.waitForFinished();
     QByteArray id = process.readAllStandardOutput();
     std::stringstream ss;
