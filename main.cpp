@@ -1,5 +1,8 @@
 #include "mainwindow.h"
+#include <QTimer>
+#include <sstream>
 #include <QApplication>
+#include <QProcess>
 
 int main(int argc, char *argv[])
 {

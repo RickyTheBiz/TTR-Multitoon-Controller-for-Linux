@@ -7,8 +7,8 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-static int win1;
-static int win2;
+static int win1 = 0;
+static int win2 = 0;
 
 /*void delay( int millisecondsToWait )
 {
@@ -133,16 +133,6 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             process.waitForFinished();
             break;
         }
-        /*case Qt::Key_E:
-        {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Delete";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }*/
         case Qt::Key_Shift:
         {
             std::stringstream s;
@@ -199,6 +189,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             s << "xdotool keydown --window " << win2 << " Ctrl";
             QString cmd = s.str().c_str();
             QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_Alt:
+        {
+            std::stringstream s;
+            std::stringstream s2;
+            s << "xdotool keydown --window " << win1 << " Alt";
+            s2 << "xdotool keydown --window " << win2 << " Alt";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            cmd = s2.str().c_str();
             process.start(cmd);
             process.waitForFinished();
             break;
@@ -263,6 +268,26 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             process.waitForFinished();
             break;
         }
+        case Qt::Key_E:
+        {
+            std::stringstream s;
+            s << "xdotool keydown --window " << win1 << " Escape";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_0:
+        {
+            std::stringstream s;
+            s << "xdotool keydown --window " << win2 << " Escape";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
     }
 }
 
@@ -315,16 +340,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
             process.waitForFinished();
             break;
         }
-        /*case Qt::Key_E:
-        {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Delete";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }*/
         case Qt::Key_Shift:
         {
             std::stringstream s;
@@ -416,19 +431,54 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
             break;
         }
         case Qt::Key_End:
-            {
-                std::stringstream s;
-                std::stringstream s2;
-                s << "xdotool keyup --window " << win1 << " End";
-                s2 << "xdotool keyup --window " << win2 << " End";
-                QString cmd = s.str().c_str();
-                QProcess process;
-                process.start(cmd);
-                process.waitForFinished();
-                cmd = s2.str().c_str();
-                process.start(cmd);
-                process.waitForFinished();
-                break;
+        {
+            std::stringstream s;
+            std::stringstream s2;
+            s << "xdotool keyup --window " << win1 << " End";
+            s2 << "xdotool keyup --window " << win2 << " End";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            cmd = s2.str().c_str();
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_E:
+        {
+            std::stringstream s;
+            s << "xdotool keyup --window " << win1 << " Escape";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_0:
+        {
+            std::stringstream s;
+            s << "xdotool keyup --window " << win2 << " Escape";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_Alt:
+        {
+            std::stringstream s;
+            std::stringstream s2;
+            s << "xdotool keyup --window " << win1 << " Alt";
+            s2 << "xdotool keyup --window " << win2 << " Alt";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            cmd = s2.str().c_str();
+            process.start(cmd);
+            process.waitForFinished();
+            break;
         }
     }
 }
