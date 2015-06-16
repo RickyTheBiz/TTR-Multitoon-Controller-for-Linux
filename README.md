@@ -58,3 +58,7 @@ To install the legacy version:
 `cd TTR-Multitoon-Controller-for-Linux/legacy`  
 `qmake`  
 `make`  
+
+#####Contributors
+* RickyTheBiz (madsciencecoder) main creator
+* katamari1992 added using Alt to open the maps
