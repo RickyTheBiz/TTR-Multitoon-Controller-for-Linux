@@ -133,16 +133,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             process.waitForFinished();
             break;
         }
-        /*case Qt::Key_E:
+        case Qt::Key_Alt:
         {
             std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Delete";
+            std::stringstream s2;
+            s << "xdotool keydown --window " << win1 << " Alt";
+            s2 << "xdotool keydown --window " << win2 << " Alt";
             QString cmd = s.str().c_str();
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
+            cmd = s2.str().c_str();
+            process.start(cmd);
+            process.waitForFinished();
             break;
-        }*/
+        }
         case Qt::Key_Shift:
         {
             std::stringstream s;
@@ -315,16 +320,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
             process.waitForFinished();
             break;
         }
-        /*case Qt::Key_E:
-        {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Delete";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }*/
         case Qt::Key_Shift:
         {
             std::stringstream s;
@@ -429,6 +424,21 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
                 process.start(cmd);
                 process.waitForFinished();
                 break;
+        }
+        case Qt::Key_Alt:
+        {
+            std::stringstream s;
+            std::stringstream s2;
+            s << "xdotool keyup --window " << win1 << " Alt";
+            s2 << "xdotool keyup --window " << win2 << " Alt";
+            QString cmd = s.str().c_str();
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            cmd = s2.str().c_str();
+            process.start(cmd);
+            process.waitForFinished();
+            break;
         }
     }
 }

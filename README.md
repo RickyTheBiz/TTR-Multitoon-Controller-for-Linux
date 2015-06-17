@@ -35,6 +35,8 @@ Q = Throws pie at smallest power on both toons (slightly bugged as power isn't a
 Delete = Throw pie or evidence  
 Home = Brings up gag preview on both toons  
 End = Brings up toontask preview on both toons  
+Alt = Brings up map view on both toons  
+
 
 #####Advanced
 To create a hotkey to activate the controls, a script is included called activate.sh.  To use it simply use your favorite hotkey program and setup a hotkey to run it.  This will let you activate the controls without manually clicking on the controls window.
@@ -58,3 +60,7 @@ To install the legacy version:
 `cd TTR-Multitoon-Controller-for-Linux/legacy`  
 `qmake`  
 `make`  
+
+#####Contributors
+* RickyTheBiz (madsciencecoder) main creator
+* katamari1992 added using Alt to open the maps
