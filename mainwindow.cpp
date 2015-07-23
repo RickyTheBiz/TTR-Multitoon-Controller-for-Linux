@@ -3,27 +3,14 @@
 #include <QTime>
 #include <QProcess>
 #include <QString>
-#include <sstream>
 #include <QKeyEvent>
 #include <QDebug>
-
-static int win1 = 0;
-static int win2 = 0;
-
-/*void delay( int millisecondsToWait )
-{
-    QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
-    while( QTime::currentTime() < dieTime )
-    {
-        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
-    }
-}*/
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    grabKeyboard();
+    grabKeyboard();     //send all keyboard strokes to this window
     ui->setupUi(this);
 }
 
@@ -34,69 +21,67 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_wasd_clicked()
 {
-//    delay(3000);
+    //run the select window tool on xdotool
     QProcess process;
     process.start("xdotool selectwindow");
     process.waitForFinished();
+
+    //get the window id from xdotool
     QByteArray id = process.readAllStandardOutput();
-    std::stringstream ss;
-    for (int i = 0; i < id.size(); i++)
-    {
-        char temp = id[i];
-        ss << temp;
-    }
-    ss >> win1;
+    win1 = id.data();
+
+    //send a ctrl keystroke to the selected window to let the user know it is active
+    //apparently TTR doesn't like it when you release ctrl too quickly so need to send both a down and up key
+    //instead of just the keypress
     QString cmd;
-    std::stringstream ss2;
-    ss2 << "xdotool keydown --window " << win1 << " ctrl";
-    cmd = ss2.str().c_str();
+    cmd = QString("xdotool keydown --window ") + win1 + QString(" ctrl");
     process.start(cmd);
     process.waitForFinished();
-    ss2 << "xdotool keyup --window " << win1 << " ctrl";
-    cmd = ss2.str().c_str();
+
+    cmd = QString("xdotool keyup --window ") + win1 + QString(" ctrl");
     process.start(cmd);
     process.waitForFinished();
 }
 
 void MainWindow::on_arrows_clicked()
 {
-    //delay(3000);
+    //run the select window tool on xdotool
     QProcess process;
     process.start("xdotool selectwindow");
     process.waitForFinished();
+
+    //get the window id from xdotool
     QByteArray id = process.readAllStandardOutput();
-    std::stringstream ss;
-    for (int i = 0; i < id.size(); i++)
-    {
-        char temp = id[i];
-        ss << temp;
-    }
-    ss >> win2;
+    win2 = id.data();
+
+    //send a ctrl keystroke to the selected window to let the user know it is active
+    //apparently TTR doesn't like it when you release ctrl too quickly so need to send both a down and up key
+    //instead of just the keypress
     QString cmd;
-    std::stringstream ss2;
-    ss2 << "xdotool keydown --window " << win2 << " ctrl";
-    cmd = ss2.str().c_str();
+    cmd = QString("xdotool keydown --window ") + win2 + QString(" ctrl");
     process.start(cmd);
     process.waitForFinished();
-    ss2 << "xdotool keyup --window " << win2 << " ctrl";
-    cmd = ss2.str().c_str();
+
+    cmd = QString("xdotool keyup --window ") + win2 + QString(" ctrl");
     process.start(cmd);
     process.waitForFinished();
 }
 
+//for when a certain key is pressed, run through a switch/case to determine the key
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if(e->isAutoRepeat())
     {
+        //keystrokes auto-repeat if held down so when this happens we simply ignore it
         return;
     }
     switch (e->key())
     {
+//Window 1 (WASD) controls
         case Qt::Key_W:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Up";
-            QString cmd = s.str().c_str();
+            //when the W key is pressed send arrow key up to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Up");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -105,9 +90,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
         case Qt::Key_A:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Left";
-            QString cmd = s.str().c_str();
+            //when the A key is pressed send arrow key left to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Left");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -115,9 +99,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_D:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Right";
-            QString cmd = s.str().c_str();
+            //when the D key is pressed send arrow key right to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Right");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -125,9 +108,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_S:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Down";
-            QString cmd = s.str().c_str();
+            //when the S key is pressed send arrow key down to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Down");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -135,19 +117,44 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Shift:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " ctrl";
-            QString cmd = s.str().c_str();
+            //when the shift key is pressed send ctrl to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" ctrl");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
         }
+        case Qt::Key_E:
+        {
+            //when the E key is pressed send escape to window 1 (WASD window)
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Escape");
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_Z:
+        {
+            //when the numpad 4 key is pressed freeze window 1 (useful for current glitch with DA and CGC)
+            QByteArray pid;
+            QProcess process;
+
+            //find out the process id of the window
+            process.start(QString("xdotool getwindowpid ") + win1);
+            process.waitForFinished();
+            pid = process.readAllStandardOutput();
+
+            //send the window the freeze command
+            process.start(QString("kill -s SIGSTOP ") + QString(pid.data()));
+            process.waitForFinished();
+            break;
+        }
+
+//Window 2 (arrows) controls
         case Qt::Key_Up:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Up";
-            QString cmd = s.str().c_str();
+            //when the Arrow key up key is pressed send arrow key up to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Up");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -155,19 +162,17 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Right:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Right";
-            QString cmd = s.str().c_str();
+            //when the Arrow key right key is pressed send arrow key right to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Right");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
-        }
+            }
         case Qt::Key_Left:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Left";
-            QString cmd = s.str().c_str();
+            //when the Arrow key left key is pressed send arrow key left to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Left");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -175,9 +180,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Down:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Down";
-            QString cmd = s.str().c_str();
+            //when the Arrow key down key is pressed send arrow key down to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Down");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -185,124 +189,146 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
         case Qt::Key_Control:
         {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Ctrl";
-            QString cmd = s.str().c_str();
+            //when the ctrl key is pressed send ctrl to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Ctrl");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
         }
-        case Qt::Key_Alt:
+        //runs if either 0 or insert is pressed (numpad 0 turns into insert if shift key is pressed on other toon)
+        case Qt::Key_0:
+        case Qt::Key_Insert:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keydown --window " << win1 << " Alt";
-            s2 << "xdotool keydown --window " << win2 << " Alt";
-            QString cmd = s.str().c_str();
+            //when the numpad 0 key is pressed send escape to window 2 (arrows window)
+            QString cmd = QString("xdotool keydown --window ") + win2 + QString(" Escape");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+            break;
+        }
+
+    case Qt::Key_X:
+    {
+        //when the numpad 4 key is pressed freeze window 2 (useful for current glitch with DA and CGC)
+        QByteArray pid;
+        QProcess process;
+
+        //find out the process id of the window
+        process.start(QString("xdotool getwindowpid ") + win2);
+        process.waitForFinished();
+        pid = process.readAllStandardOutput();
+
+        //send the window the freeze command
+        process.start(QString("kill -s SIGSTOP ") + QString(pid.data()));
+        process.waitForFinished();
+        break;
+    }
+
+//controls for both windows
+        case Qt::Key_Alt:
+        {
+            //When alt key is pressed send alt to both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Alt");
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+
+            //send to win2
+            cmd = QString("xdotool keydown --window ") + win2 + QString(" Alt");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_Delete:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keydown --window " << win1 << " Delete";
-            s2 << "xdotool keydown --window " << win2 << " Delete";
-            QString cmd = s.str().c_str();
+            //When delete key is pressed send delete to both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Delete");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keydown --window ") + win2 + QString(" Delete");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_Home:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keydown --window " << win1 << " Home";
-            s2 << "xdotool keydown --window " << win2 << " Home";
-            QString cmd = s.str().c_str();
+            //When home key is pressed send home to both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" Home");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keydown --window ") + win2 + QString(" Home");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_End:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keydown --window " << win1 << " End";
-            s2 << "xdotool keydown --window " << win2 << " End";
-            QString cmd = s.str().c_str();
+            //When end key is pressed send end to both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keydown --window ") + win1 + QString(" End");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keydown --window ") + win2 + QString(" End");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
+
+        //a little different than normal, this one sends just a keypress and there is no key release counter part
         case Qt::Key_Q:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool key --window " << win1 << " Delete";
-            s2 << "xdotool key --window " << win2 << " Delete";
-            QString cmd = s.str().c_str();
+            //When Q key is pressed send Delete keystroke to both windows
+            //this function sends just a keystroke which releases quickly regardless of how long it is pressed
+
+            //send to win1
+            QString cmd = QString("xdotool key --window ") + win1 + QString(" Delete");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool key --window ") + win2 + QString(" Delete");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
-        case Qt::Key_E:
-        {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win1 << " Escape";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }
-        case Qt::Key_0:
-        {
-            std::stringstream s;
-            s << "xdotool keydown --window " << win2 << " Escape";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }
+
     }
 }
 
+//for when a certain key is released, run through a switch/case to determine the key
 void MainWindow::keyReleaseEvent(QKeyEvent *r)
 {
     if(r->isAutoRepeat())
+    {
+        //keystrokes auto-repeat if held down so when this happens we simply ignore it
         return;
+    }
 
     switch (r->key())
     {
+//Window 1 (WASD) controls
         case Qt::Key_W:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Up";
-            QString cmd = s.str().c_str();
+            //when the W key is released release arrow key up for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Up");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -311,20 +337,17 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
 
         case Qt::Key_A:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Left";
-            QString cmd = s.str().c_str();
+            //when the A key is released release arrow key left for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Left");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
         }
-
         case Qt::Key_D:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Right";
-            QString cmd = s.str().c_str();
+            //when the D key is released release arrow key right for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Right");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -332,9 +355,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
         }
         case Qt::Key_S:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Down";
-            QString cmd = s.str().c_str();
+            //when the S key is released release arrow key down for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Down");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -342,19 +364,44 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
         }
         case Qt::Key_Shift:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " ctrl";
-            QString cmd = s.str().c_str();
+            //when the shift key is released release ctrl for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" ctrl");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
         }
+        case Qt::Key_E:
+        {
+            //when the E key is released release escape for window 1 (WASD window)
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Escape");
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_Z:
+        {
+            //when the numpad 4 key is pressed freeze window 2 (useful for current glitch with DA and CGC)
+            QByteArray pid;
+            QProcess process;
+
+            //find out the process id of the window
+            process.start(QString("xdotool getwindowpid ") + win1);
+            process.waitForFinished();
+            pid = process.readAllStandardOutput();
+
+            //send the window the freeze command
+            process.start(QString("kill -s SIGCONT ") + QString(pid.data()));
+            process.waitForFinished();
+            break;
+        }
+
+//Window 2 (arrows) controls
         case Qt::Key_Up:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Up";
-            QString cmd = s.str().c_str();
+            //when the Arrow key up key is released release arrow key up for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Up");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -362,19 +409,17 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
         }
         case Qt::Key_Right:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Right";
-            QString cmd = s.str().c_str();
+            //when the Arrow key right key is released release arrow key right for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Right");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
             break;
-        }
+            }
         case Qt::Key_Left:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Left";
-            QString cmd = s.str().c_str();
+            //when the Arrow key left key is released release arrow key left for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Left");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -382,9 +427,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
         }
         case Qt::Key_Down:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Down";
-            QString cmd = s.str().c_str();
+            //when the Arrow key down key is released release arrow key down for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Down");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
@@ -392,90 +436,102 @@ void MainWindow::keyReleaseEvent(QKeyEvent *r)
         }
         case Qt::Key_Control:
         {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Ctrl";
-            QString cmd = s.str().c_str();
+            //when the ctrl key is released release ctrl for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Ctrl");
             QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        //runs if either 0 or insert is pressed (numpad 0 turns into insert if shift key is pressed on other toon)
+        case Qt::Key_0:
+        case Qt::Key_Insert:
+        {
+            //when the numpad 0 key is released release escape for window 2 (arrows window)
+            QString cmd = QString("xdotool keyup --window ") + win2 + QString(" Escape");
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+            break;
+        }
+        case Qt::Key_X:
+        {
+            //when the numpad 4 key is released un-freeze window 2 (useful for current glitch with DA and CGC)
+            QByteArray pid;
+            QProcess process;
+
+            //find out the process id of the window
+            process.start(QString("xdotool getwindowpid ") + win2);
+            process.waitForFinished();
+            pid = process.readAllStandardOutput();
+
+            //send the window the freeze command
+            process.start(QString("kill -s SIGCONT ") + QString(pid.data()));
+            process.waitForFinished();
+            break;
+        }
+
+//controls for both windows
+        case Qt::Key_Alt:
+        {
+            //When alt key is released release alt for both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Alt");
+            QProcess process;
+            process.start(cmd);
+            process.waitForFinished();
+
+            //send to win2
+            cmd = QString("xdotool keyup --window ") + win2 + QString(" Alt");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_Delete:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keyup --window " << win1 << " Delete";
-            s2 << "xdotool keyup --window " << win2 << " Delete";
-            QString cmd = s.str().c_str();
+            //When delete key is released release delete for both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Delete");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keyup --window ") + win2 + QString(" Delete");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_Home:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keyup --window " << win1 << " Home";
-            s2 << "xdotool keyup --window " << win2 << " Home";
-            QString cmd = s.str().c_str();
+            //When home key is released release home for both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" Home");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keyup --window ") + win2 + QString(" Home");
             process.start(cmd);
             process.waitForFinished();
             break;
         }
         case Qt::Key_End:
         {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keyup --window " << win1 << " End";
-            s2 << "xdotool keyup --window " << win2 << " End";
-            QString cmd = s.str().c_str();
+            //When end key is released release end for both windows
+
+            //send to win1
+            QString cmd = QString("xdotool keyup --window ") + win1 + QString(" End");
             QProcess process;
             process.start(cmd);
             process.waitForFinished();
-            cmd = s2.str().c_str();
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }
-        case Qt::Key_E:
-        {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win1 << " Escape";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }
-        case Qt::Key_0:
-        {
-            std::stringstream s;
-            s << "xdotool keyup --window " << win2 << " Escape";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            break;
-        }
-        case Qt::Key_Alt:
-        {
-            std::stringstream s;
-            std::stringstream s2;
-            s << "xdotool keyup --window " << win1 << " Alt";
-            s2 << "xdotool keyup --window " << win2 << " Alt";
-            QString cmd = s.str().c_str();
-            QProcess process;
-            process.start(cmd);
-            process.waitForFinished();
-            cmd = s2.str().c_str();
+
+            //send to win2
+            cmd = QString("xdotool keyup --window ") + win2 + QString(" End");
             process.start(cmd);
             process.waitForFinished();
             break;

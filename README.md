@@ -1,5 +1,5 @@
 # TTR-Multitoon-Controller-for-Linux
-This program has been tested on Ubuntu 14.04.  It will likely run on other flavors of linux but dependency packages names may differ.  This is a very rudimentary program so feel free to improve upon it.  Please note that there are now 2 versions.  The recommended one is the main folder and a new "legacy" one is inside the folder called "legacy".  I updated the method of getting the window id for what window to send the keys to but it is not compatible with every system.  Kubuntu 14.04 and 14.10 do not work with the new method.  Kubuntu 15.04 is tested to work with the new method.  If you use a different distro I recommend trying the new one to see if it works for you and if it doesn't to use the "legacy" one.
+This program has been tested on Ubuntu 14.04 (legacy) and Ubuntu 15.04.  It will likely run on other flavors of linux but dependency packages names may differ.  I have included some comments and shouldn't be hard to figure out how to add or modify hotkeys if you'd like to customize it for your needs.  Please note that there are now 2 versions.  The recommended one is the main folder and a new "legacy" one is inside the folder called "legacy".  I updated the method of getting the window id for what window to send the keys to but it is not compatible with every system.  Kubuntu 14.04 and 14.10 do not work with the new method.  Kubuntu 15.04 is tested to work with the new method.  If you use a different distro I recommend trying the new one to see if it works for you and if it doesn't to use the "legacy" one.
 
 #####How to use it:
 1. Open two instances of Toontown Rewritten and load your toons.
@@ -12,7 +12,7 @@ This program has been tested on Ubuntu 14.04.  It will likely run on other flavo
 8. To re-enable the controls click on the controls window
 9. If a toon crashes, simply click the button again, then the window, and your toon will be bound to those controls again.
 
-Video tutorial at: https://www.youtube.com/watch?v=iA_vh0EKJJc
+Video tutorial at: https://www.youtube.com/watch?v=iA_vh0EKJJc (old, need to get around to updating)
 
 #####Controls
 WASD Toon:  
@@ -21,6 +21,8 @@ A = Left
 S = Backward  
 D = Right  
 Shift = Jump  
+Z = Freeze window (for DA offices and Cog Golf Courses glitch, press to freeze and release to unfreeze)  
+E = Escape (brings up schticker book, takes you off of crane in CFO, and takes you off tables in CEO)
 
 Arrows Toon:  
 Arrow Key Up = Forward  
@@ -28,6 +30,8 @@ Arrow Key Left = Left
 Arrow Key Right = Right  
 Arrow Key Down = Down  
 Control = Jump  
+X = Freeze window (for DA offices and Cog Golf Courses glitch, press to freeze and release to unfreeze)  
+0 = Escape (brings up schticker book, takes you off of crane in CFO, and takes you off tables in CEO)
 
 
 Both Toons:  
