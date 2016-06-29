@@ -1,3 +1,6 @@
+# NOTE:
+This program was one of my first and thus is very crudely written.  I have done an entire rewrite to optimize it and implement things more properly.  The new version is at: https://github.com/madsciencecoder/Toontown-Controller
+
 # TTR-Multitoon-Controller-for-Linux
 This program has been tested on Ubuntu 14.04 (legacy) and Ubuntu 15.04.  It will likely run on other flavors of linux but dependency packages names may differ.  I have included some comments and shouldn't be hard to figure out how to add or modify hotkeys if you'd like to customize it for your needs.  Please note that there are now 2 versions.  The recommended one is the main folder and a new "legacy" one is inside the folder called "legacy".  I updated the method of getting the window id for what window to send the keys to but it is not compatible with every system.  Kubuntu 14.04 and 14.10 do not work with the new method.  Kubuntu 15.04 is tested to work with the new method.  If you use a different distro I recommend trying the new one to see if it works for you and if it doesn't to use the "legacy" one.
 
